@@ -8,26 +8,6 @@ import { defineStore } from 'pinia';
 import { ref } from 'vue';
 
 /**
- * 定义信号监听器类型
- * 监听器是一个函数，可以接收任意数量和类型的参数
- */
-type SignalListener = (...params: any[]) => void;
-
-/**
- * 定义信号监听器配置接口
- * @property listener - 监听器函数
- * @property context - 监听器执行上下文
- * @property priority - 监听器优先级，数值越大优先级越高
- * @property once - 是否为一次性监听器
- */
-interface ListenerConfig {
-  listener: SignalListener;
-  context?: any;
-  priority?: number;
-  once?: boolean;
-}
-
-/**
  * 创建信号系统的 Pinia Store
  * 使用组合式 API 风格定义 Store
  */

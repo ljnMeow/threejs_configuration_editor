@@ -2,6 +2,8 @@ import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import useSignalStore from "@/store/modules/signalStore";
 
+import GridHelperManager from "./helpers/GridHelper";
+
 export default class SceneViewport {
   container: HTMLDivElement;
   scene: THREE.Scene;
@@ -12,8 +14,8 @@ export default class SceneViewport {
   // 场景中的物体
   private objects: THREE.Object3D[] = [];
 
-  // 网格辅助线
-  private gridHelper: THREE.GridHelper | null = null;
+  // 网格辅助线管理器
+  private gridHelperManager: GridHelperManager | null = null;
 
   // 坐标轴辅助线
   private axesHelper: THREE.AxesHelper | null = null;
@@ -22,6 +24,7 @@ export default class SceneViewport {
     this.container = container;
     this.scene = window.editor.scene;
     this.camera = window.editor.camera;
+    this.gridHelperManager = new GridHelperManager(this.scene);
 
     // 初始化场景
     this.initRenderer();
@@ -82,9 +85,8 @@ export default class SceneViewport {
    * 初始化辅助工具（网格和坐标轴）
    */
   private initHelpers(): void {
-    // 添加网格辅助线
-    this.gridHelper = new THREE.GridHelper(100, 100);
-    this.scene.add(this.gridHelper);
+    // 创建网格辅助线管理器
+    this.gridHelperManager?.create();
 
     // 添加坐标轴辅助线
     this.axesHelper = new THREE.AxesHelper(50);
@@ -112,9 +114,9 @@ export default class SceneViewport {
     }
 
     // 移除辅助工具
-    if (this.gridHelper) {
-      this.scene.remove(this.gridHelper);
-      this.gridHelper = null;
+    if (this.gridHelperManager) {
+      this.gridHelperManager.dispose();
+      this.gridHelperManager = null;
     }
 
     if (this.axesHelper) {
@@ -138,6 +140,7 @@ export default class SceneViewport {
     const signalStore = useSignalStore();
 
     signalStore.add("viewportResize", this.viewportResize.bind(this));
+    signalStore.add("gridHelperConfigUpdate", (config: SceneInfo) => this.gridHelperManager?.updateGridHelperConfig(config));
   }
 
   viewportResize() {

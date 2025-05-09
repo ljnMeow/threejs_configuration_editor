@@ -41,7 +41,7 @@ const lightList = ref([
       <el-col
         :span="12"
         v-for="item in lightList"
-        :key="item.id"
+        :key="item.key"
         draggable="true"
       >
         <el-space class="light-item" :size="6" direction="vertical">

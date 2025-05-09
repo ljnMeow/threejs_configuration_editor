@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted, nextTick } from 'vue';
 import useSignalStore from '@/store/modules/signalStore';
-import { SceneViewport } from '../core';
+import { SceneViewport } from '@/core';
 
 const sceneVireportRef = ref();
 const signalStore = useSignalStore();

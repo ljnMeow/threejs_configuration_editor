@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import Header from "./layouts/Header.vue";
-import Left from "./layouts/Left.vue";
-import Center from "./layouts/Center.vue";
-import Right from "./layouts/Right.vue";
+import Left from "./layouts/Left/index.vue";
+import Center from "./layouts/Center/index.vue";
+import Right from "./layouts/Right/index.vue";
 </script>
 
 <template>
