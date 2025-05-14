@@ -8,6 +8,7 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    AxesConfig: typeof import('./src/components/SceneConfig/AxesConfig.vue')['default']
     Base: typeof import('./src/components/SceneConfig/Base.vue')['default']
     BaseConfig: typeof import('./src/components/SceneConfig/BaseConfig.vue')['default']
     ElButton: typeof import('element-plus/es')['ElButton']
@@ -29,6 +30,7 @@ declare module 'vue' {
     ElIcon: typeof import('element-plus/es')['ElIcon']
     ElImage: typeof import('element-plus/es')['ElImage']
     ElInput: typeof import('element-plus/es')['ElInput']
+    ElInputNumber: typeof import('element-plus/es')['ElInputNumber']
     ElMain: typeof import('element-plus/es')['ElMain']
     ElPopconfirm: typeof import('element-plus/es')['ElPopconfirm']
     ElRow: typeof import('element-plus/es')['ElRow']
@@ -50,5 +52,6 @@ declare module 'vue' {
     Scene: typeof import('./src/components/Scene.vue')['default']
     SceneConfig: typeof import('./src/components/SceneConfig/index.vue')['default']
     SvgIcon: typeof import('./src/components/SvgIcon/index.vue')['default']
+    ViewHelperConfig: typeof import('./src/components/SceneConfig/ViewHelperConfig.vue')['default']
   }
 }

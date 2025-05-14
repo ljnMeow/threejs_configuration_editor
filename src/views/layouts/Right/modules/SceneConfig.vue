@@ -2,6 +2,8 @@
 import { ref } from "vue";
 import BaseConfig from "@/components/SceneConfig/BaseConfig.vue";
 import GridConfig from "@/components/SceneConfig/GridConfig.vue";
+import AxesConfig from "@/components/SceneConfig/AxesConfig.vue";
+import ViewHelperConfig from "@/components/SceneConfig/ViewHelperConfig.vue"
 
 const activeKey = ref(0);
 </script>
@@ -13,6 +15,12 @@ const activeKey = ref(0);
     </el-collapse-item>
     <el-collapse-item title="网格" :name="1" icon="CaretRight">
       <GridConfig />
+    </el-collapse-item>
+    <el-collapse-item title="坐标轴" :name="2" icon="CaretRight">
+      <AxesConfig />
+    </el-collapse-item>
+    <el-collapse-item title="视图辅助器" :name="3" icon="CaretRight">
+      <ViewHelperConfig />
     </el-collapse-item>
   </el-collapse>
 </template>

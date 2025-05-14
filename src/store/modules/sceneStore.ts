@@ -1,5 +1,7 @@
 import { defineStore } from "pinia";
 import { DefaultGridConfig } from "@/core/helpers/GridHelper";
+import { DefaultAxesConfig } from "@/core/helpers/AxesHelper";
+import { DefaultViewHelperConfig } from "@/core/helpers/ViewHelper"
 import useSignalStore from "./signalStore";
 
 /**
@@ -9,10 +11,13 @@ const DefaultSceneInfo: SceneInfo = {
   id: "", // 场景唯一标识符
   name: "", // 场景名称
   desc: "", // 场景描述
-  gridVisible: DefaultGridConfig.isVisible, // 网格是否可见
-  gridSize: DefaultGridConfig.size, // 网格大小(从中心点向四周延伸的距离)
-  gridDivisions: DefaultGridConfig.divisions, // 网格分割数量(值越大网格越密集)
-  gridColor: DefaultGridConfig.gridColor, // 网格线颜色(除中心线外的网格线)
+  gridHelperVisible: DefaultGridConfig.isVisible, // 网格是否可见
+  gridHelperSize: DefaultGridConfig.size, // 网格大小(从中心点向四周延伸的距离)
+  gridHelperDivisions: DefaultGridConfig.divisions, // 网格分割数量(值越大网格越密集)
+  gridHelperColor: DefaultGridConfig.gridColor, // 网格线颜色(除中心线外的网格线)
+  axesHelperVisible: DefaultAxesConfig.isVisible, // 坐标轴是否可见
+  axesHelperSize: DefaultAxesConfig.size, // 坐标轴长度(从中心点向四周延伸的距离)
+  viewHelperVisible: DefaultViewHelperConfig.isVisible, // 视图指示器是否可见
 };
 
 /**
@@ -34,9 +39,15 @@ export const useSceneInfoStore = defineStore("sceneInfo", {
       // 更新 store 中的数据
       this.data[field] = value;
 
-      // 检查是否为网格相关属性，如果是则触发网格更新信号
-      if (field.startsWith("grid")) {
+      // 检查并更新相关属性
+      if (field.startsWith("gridHelper")) {
         this.updateGridHelper();
+      }
+      if (field.startsWith("axesHelper")) {
+        this.updateAxesHelper();
+      }
+      if (field.startsWith("viewHelper")) {
+        this.updateViewHelper();
       }
     },
 
@@ -47,12 +58,36 @@ export const useSceneInfoStore = defineStore("sceneInfo", {
     updateGridHelper() {
       const signalStore = useSignalStore();
 
-      // 发送网格更新信号，携带所有网格相关配置
       signalStore.dispatch("gridHelperConfigUpdate", {
-        visible: this.data.gridVisible,
-        size: this.data.gridSize,
-        divisions: this.data.gridDivisions,
-        gridColor: this.data.gridColor,
+        visible: this.data.gridHelperVisible,
+        size: this.data.gridHelperSize,
+        divisions: this.data.gridHelperDivisions,
+        gridColor: this.data.gridHelperColor,
+      });
+    },
+
+    /**
+     * 更新坐标轴辅助线
+     * 触发信号通知 AxesHelperManager 更新视图
+     */
+    updateAxesHelper() {
+      const signalStore = useSignalStore();
+
+      signalStore.dispatch("axesHelperConfigUpdate", {
+        visible: this.data.axesHelperVisible,
+        size: this.data.axesHelperSize,
+      });
+    },
+
+    /**
+     * 更新视图辅助器
+     * 触发信号通知 ViewHelperManager 更新视图
+     */
+    updateViewHelper() {
+      const signalStore = useSignalStore();
+
+      signalStore.dispatch("viewHelperConfigUpdate", {
+        visible: this.data.viewHelperVisible,
       });
     },
   },

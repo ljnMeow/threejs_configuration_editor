@@ -11,3 +11,68 @@
     font-weight: bold;
     color: #3f3f3f;
 }
+
+// 视图辅助器样式
+#view-helper-container {
+    width: 100px;
+    height: 100px;
+    margin: 10px;
+    perspective: 800px;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    z-index: 1000;
+    display: block;
+
+    .view-helper-cube {
+        width: 80px;
+        height: 80px;
+        position: relative;
+        transform-style: preserve-3d;
+        text-transform: uppercase;
+
+        .view-helper-direction {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            border: 1px solid #808080;
+            line-height: 80px;
+            font-size: 30px;
+            font-weight: bold;
+            color: #7d7d7d;
+            text-align: center;
+            background: #fff;
+            transition: all 0.1s;
+            cursor: pointer;
+            user-select: none;
+            border-radius: 16px;
+
+            &:hover {
+                background: #adadad;
+                color: #fff;
+            }
+        }
+
+        .view-helper-direction--top {
+            transform: rotateY(0deg) rotateX(90deg) translateZ(-46px);
+        }
+        .view-helper-direction--bottom {
+            transform: rotateX(270deg) translateZ(-46px);
+        }
+        .view-helper-direction--front {
+            transform: rotateX(180deg) translateZ(-46px);
+        }
+        .view-helper-direction--back {
+            transform: rotateZ(180deg) translateZ(-46px);
+        }
+        .view-helper-direction--left {
+            transform: rotateY(-90deg) rotateX(180deg) rotateZ(0deg) translateZ(-46px);
+        }
+        .view-helper-direction--right {
+            transform: rotateY(90deg) rotateX(180deg) rotateZ(0deg) translateZ(-46px);
+        }
+    }
+}
